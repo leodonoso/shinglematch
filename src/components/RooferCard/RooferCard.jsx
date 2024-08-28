@@ -1,70 +1,53 @@
-import {useState, useEffect} from 'react'
+import {useState, useCallback} from 'react'
+import axios from 'axios'
 import "./RooferCard.css"
 
-const RooferCard = ({roofer, setCurrentRadiusIndex, currentRadiusIndex, setLocationB, isInRadius, setIsInRadius, distanceMiles, locationA, isCalculatingRadius, setIsCalculatingRadius, radiusResults, setRadiusResults}) => {
+const RooferCard = ({roofer, locationA, isCalculatingRadius, setIsCalculatingRadius, radiusResults, setRadiusResults}) => {
   const [isHidden, setIsHidden] = useState(true)
-
-  useEffect(() => {
-    if(currentRadiusIndex === 0) return
-    if(isInRadius === true) {
-      setCurrentRadiusIndex(0)
-      return
-    }
-
-    if (currentRadiusIndex < roofer.radius.length && isInRadius === false) {
-      console.log("There's still locations left to calculate")
-      setTimeout(handleOnClick, 500)
-    }
-  }, [isInRadius, currentRadiusIndex])
   
-    
-// Check if the lead is in radius
-  useEffect(() => {
-    if(distanceMiles === 0) {setIsInRadius(false); return}
-
-    if (roofer.radius[currentRadiusIndex].miles > distanceMiles) {
-      console.log("Lead is inside the client's radius. Distance miles: ", distanceMiles)
-      setRadiusResults([...radiusResults, distanceMiles])
-      setIsInRadius(true)
-      setCurrentRadiusIndex(0)
-      setIsCalculatingRadius(false)
-    } else {
-      console.log("Lead is out of radius. Distance miles: ", distanceMiles)
-      setRadiusResults([...radiusResults, distanceMiles])
-      setIsInRadius(false)
-    }
-  }, [distanceMiles])
-
-  const handleOnClick = () => {
+  // Click the button
+  const handleOnClick = useCallback(async () => {
+  // 1.- Is calculating radius turns true
     if (locationA === null) return
-    console.log("Step 1")
-
+    const radiusDistances = []
     setIsCalculatingRadius(true)
-    console.log("Current Radius Index ", currentRadiusIndex)
-    // Check if there's still locations left to calculate
-    if (currentRadiusIndex < roofer.radius.length) {
-        // Grab coordinates from the current radius location and set it to location B
-        setLocationB(roofer.radius[currentRadiusIndex])
-        // Console log the radius for the current location B to check if the lead in location A is in range
-        console.log(`The radius is ${roofer.radius[currentRadiusIndex].miles} miles around ${roofer.radius[currentRadiusIndex].location}`)
-        // Wait for the location to be calculated
-        setTimeout(() => {
-          // If there's still locations left to calcutate, add 1 to the currentRadiusIndex
-          if (currentRadiusIndex < roofer.radius.length-1) {
-            console.log("There's still locations left to calculate")
-            setCurrentRadiusIndex(currentRadiusIndex+1)
-          }
-          // If not, set it to 0
-          else {
-            console.log("There are no more locations to calculate")
-            setCurrentRadiusIndex(0); 
-            setIsCalculatingRadius(false)
-          }
-        }, 500)
-        
-    }
-  }
+  // 3.- Grab first element in radius lenght
+    for (const place of roofer.radius) {
+      let isInRadius = false
 
+      console.log(radiusResults)
+      // console.log(index, place, place.longitude, locationA)
+    // 4.- Calculate distance, check if it's radius
+
+      const options = {
+        method: 'GET',
+        url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/directions',
+        params: {
+          locationA: locationA,
+          locationB: place
+        }
+      }
+      
+      await axios.request(options).then((response) => {
+        const results = response.data
+        const distanceKm = results.routes[0].distance / 1000;
+        const distanceMi = distanceKm / 1.609;
+        radiusDistances.push(distanceMi)
+
+        if (distanceMi <= place.miles) {
+          console.log(`Roofer is in radius! DistanceMi: ${distanceMi}, Perimeter: ${place.miles}, Radius Results: ${radiusResults}`)
+          setIsCalculatingRadius(false)
+          isInRadius = true
+          return    
+        } else {
+          console.log(`Roofer is not in radius. DistanceMi: ${distanceMi}, Perimeter: ${place.miles}, Radius Results: ${radiusResults}`)
+        }
+      });
+
+      if (isInRadius === true) break
+      setRadiusResults(radiusDistances)  
+    }
+  }, [locationA, radiusResults, setRadiusResults, roofer.radius, setIsCalculatingRadius])
 
   return (
     <li className='card'>
@@ -94,11 +77,12 @@ const RooferCard = ({roofer, setCurrentRadiusIndex, currentRadiusIndex, setLocat
         <div className='card-container'>
           <p>Calendars</p>
           <button onClick={() => {if(isHidden){setIsHidden(false)} else setIsHidden(true)}}>{isHidden ? "Show" : "Hide"} google calendar</button>
-          {isHidden ? <></> : <iframe src={roofer.calendar} width="800" height="600" frameBorder="0" scrolling="no"></iframe>}
-          <button><a target='_blank' href='https://outlook.live.com/owa/calendar/00000000-0000-0000-0000-000000000000/d879192f-ab8b-4079-a4dc-e434600f1046/cid-DAFBE65BF8D5EF21/index.html'>Show outlook calendar</a></button>
+          {isHidden ? <></> : <iframe src={roofer.calendar} title={`${roofer.name} G-cal`} width="800" height="600" frameBorder="0" scrolling="no"></iframe>}
+          <button><a target='_blank' rel='noreferrer' href='https://outlook.live.com/owa/calendar/00000000-0000-0000-0000-000000000000/d879192f-ab8b-4079-a4dc-e434600f1046/cid-DAFBE65BF8D5EF21/index.html'>Show outlook calendar</a></button>
         </div>
     </li>
   )
+
 }
 
 export default RooferCard
