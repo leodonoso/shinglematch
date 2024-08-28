@@ -60,8 +60,7 @@ const RooferCard = ({roofer, setCurrentRadiusIndex, currentRadiusIndex, setLocat
             setCurrentRadiusIndex(0); 
             setIsCalculatingRadius(false)
           }
-        }, 500)
-        
+        }, 500)   
     }
   }
 
@@ -94,8 +93,8 @@ const RooferCard = ({roofer, setCurrentRadiusIndex, currentRadiusIndex, setLocat
         <div className='card-container'>
           <p>Calendars</p>
           <button onClick={() => {if(isHidden){setIsHidden(false)} else setIsHidden(true)}}>{isHidden ? "Show" : "Hide"} google calendar</button>
-          {isHidden ? <></> : <iframe src={roofer.calendar} width="800" height="600" frameBorder="0" scrolling="no"></iframe>}
-          <button><a target='_blank' href='https://outlook.live.com/owa/calendar/00000000-0000-0000-0000-000000000000/d879192f-ab8b-4079-a4dc-e434600f1046/cid-DAFBE65BF8D5EF21/index.html'>Show outlook calendar</a></button>
+          {isHidden ? <></> : <iframe src={roofer.calendar} title={`${roofer.name} G-cal`} width="800" height="600" frameBorder="0" scrolling="no"></iframe>}
+          <button><a target='_blank' rel='noreferrer' href='https://outlook.live.com/owa/calendar/00000000-0000-0000-0000-000000000000/d879192f-ab8b-4079-a4dc-e434600f1046/cid-DAFBE65BF8D5EF21/index.html'>Show outlook calendar</a></button>
         </div>
     </li>
   )
