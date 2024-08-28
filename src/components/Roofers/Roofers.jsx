@@ -2,7 +2,7 @@ import React from 'react'
 import RooferCard from '../RooferCard/RooferCard'
 import "./Roofers.css"
 
-const Roofers = ({locationA, area, roofersAvailable, setCurrentRadiusIndex, currentRadiusIndex, setLocationB, isInRadius, setIsInRadius, distanceMiles, isCalculatingRadius, setIsCalculatingRadius, radiusResults, setRadiusResults}) => {
+const Roofers = ({locationA, area, roofersAvailable, isCalculatingRadius, setIsCalculatingRadius, radiusResults, setRadiusResults}) => {
 
   return (
     <div>
@@ -18,17 +18,12 @@ const Roofers = ({locationA, area, roofersAvailable, setCurrentRadiusIndex, curr
         {roofersAvailable.map((roofer) =>
           <RooferCard 
             roofer={roofer} 
-            key={roofer.key} 
-            setCurrentRadiusIndex={setCurrentRadiusIndex} 
-            currentRadiusIndex={currentRadiusIndex} 
-            setLocationB={setLocationB} 
-            distanceMiles={distanceMiles}
-            isInRadius={isInRadius} 
-            setIsInRadius={setIsInRadius}
+            key={roofer.key}
             radiusResults={radiusResults}
             setRadiusResults={setRadiusResults}
             isCalculatingRadius={isCalculatingRadius}
             setIsCalculatingRadius={setIsCalculatingRadius}
+            locationA={locationA}
           />
         )}
         </ul> :
@@ -37,12 +32,6 @@ const Roofers = ({locationA, area, roofersAvailable, setCurrentRadiusIndex, curr
           <RooferCard 
             roofer={roofer} 
             key={roofer.key} 
-            setCurrentRadiusIndex={setCurrentRadiusIndex} 
-            currentRadiusIndex={currentRadiusIndex} 
-            setLocationB={setLocationB} 
-            distanceMiles={distanceMiles}
-            isInRadius={isInRadius} 
-            setIsInRadius={setIsInRadius}
             locationA={locationA}
             radiusResults={radiusResults}
             setRadiusResults={setRadiusResults}

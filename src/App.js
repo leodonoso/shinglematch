@@ -9,10 +9,6 @@ function App() {
   const [roofers, setRoofers] = useState([])
   const [roofersAvailable, setRoofersAvailable] = useState([])
   const [locationA, setLocationA] = useState(null)
-  const [currentRadiusIndex, setCurrentRadiusIndex] = useState(0)
-  const [locationB, setLocationB] = useState(null)
-  const [distanceMiles, setDistanceMiles] = useState(0)
-  const [isInRadius, setIsInRadius] = useState(false)
   const [radiusResults, setRadiusResults] = useState([])
   const [isCalculatingRadius, setIsCalculatingRadius] = useState(false)
 
@@ -45,37 +41,6 @@ function App() {
     })
     setRoofersAvailable(roofersInArea)
     }, [area, roofers])
-  
-// Calculate distance between location A and location B
-  useEffect(() => {
-    console.log("Location A or B have changed", locationB, locationA)
-    if (locationB === null) return
-    if (locationA === null) return
-    console.log("Only do this if Location A and Location B exist")
-    const calculateRadius = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/directions',
-        params: {
-          locationA: locationA,
-          locationB: locationB
-        }
-      }
-  
-      await axios.request(options).then((response) => {
-        const results = response.data
-        const distanceKm = results.routes[0].distance / 1000;
-        const distanceMi = distanceKm / 1.609;
-        setDistanceMiles(distanceMi);
-        console.log(`Distance from current location to ${locationB.location}: ${distanceMi.toPrecision(3)} miles`);
-      });
-    }
-    try {
-      calculateRadius()
-    } catch (error) {
-      console.log("There was an error: ", error)
-    }
-  }, [locationB, locationA])
 
   return (
     <div className="App">
@@ -84,22 +49,13 @@ function App() {
         setArea={setArea} 
         setAddressQuery={setAddressQuery} 
         setLocationA={setLocationA} 
-        setLocationB={setLocationB} 
         setRadiusResults={setRadiusResults}
-        setIsInRadius={setIsInRadius}
       />
     
-      <Roofers 
+      <Roofers
         addressQuery={addressQuery} 
         area={area} 
         roofersAvailable={roofersAvailable}
-        setCurrentRadiusIndex={setCurrentRadiusIndex}
-        currentRadiusIndex={currentRadiusIndex}
-        setLocationB={setLocationB}
-        locationB={locationB}
-        distanceMiles={distanceMiles}
-        isInRadius={isInRadius} 
-        setIsInRadius={setIsInRadius}
         locationA={locationA}
         radiusResults={radiusResults}
         setRadiusResults={setRadiusResults}

@@ -2,7 +2,7 @@ import {useState} from 'react'
 import axios from 'axios';
 import './Navigation.css';
 
-const Navigation = ({setArea, setAddressQuery, setLocationA, setLocationB, setRadiusResults, setIsInRadius}) => {
+const Navigation = ({setArea, setAddressQuery, setLocationA, setRadiusResults}) => {
   const [suggestions, setSuggestions] = useState([])
 
   const handleAddress = async (e) => {
@@ -49,13 +49,11 @@ const Navigation = ({setArea, setAddressQuery, setLocationA, setLocationB, setRa
                     const coma = suggestion.properties.place_formatted.search(",")
                     const firstNumber = suggestion.properties.place_formatted.search(/[0-9]/)
                     const addressState = suggestion.properties.place_formatted.substring(coma+2, firstNumber)
-                    setLocationB(null)
                     setLocationA({
                       longitude: suggestion.properties.coordinates.longitude,
                       latitude: suggestion.properties.coordinates.latitude,
                     })
                     setArea(addressState)
-                    setIsInRadius(false)
                     setSuggestions([])
                     setRadiusResults([])
                   }}
