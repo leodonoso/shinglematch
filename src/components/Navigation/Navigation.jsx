@@ -11,7 +11,7 @@ const Navigation = ({setArea, setAddressQuery, setLocationA, setLocationB, setRa
 
       const options = {
         method: 'GET',
-        url: 'http://localhost:8000/maps',
+        url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/maps',
         params: {
           addressQuery: e.target.value
         }

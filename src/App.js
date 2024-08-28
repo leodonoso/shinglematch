@@ -22,7 +22,7 @@ function App() {
 
     const options = {
       method: 'GET',
-      url: 'http://localhost:8000/roofers',
+      url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/roofers',
     }
 
     axios.request(options).then((response) => {
@@ -55,7 +55,7 @@ function App() {
     const calculateRadius = async () => {
       const options = {
         method: 'GET',
-        url: 'http://localhost:8000/directions',
+        url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/directions',
         params: {
           locationA: locationA,
           locationB: locationB
