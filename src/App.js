@@ -18,7 +18,10 @@ function App() {
 
     const options = {
       method: 'GET',
+      // Production Server
       url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/roofers',
+      // Local Server
+      // url: 'http://localhost:8080/roofers'
     }
 
     axios.request(options).then((response) => {

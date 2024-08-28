@@ -11,7 +11,11 @@ const Navigation = ({setArea, setAddressQuery, setLocationA, setRadiusResults}) 
 
       const options = {
         method: 'GET',
+        // Production Server
         url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/maps',
+        // Local Server
+        // url: 'http://localhost:8080/maps',
+
         params: {
           addressQuery: e.target.value
         }

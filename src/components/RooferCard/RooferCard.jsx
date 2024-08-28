@@ -21,7 +21,11 @@ const RooferCard = ({roofer, locationA, isCalculatingRadius, setIsCalculatingRad
 
       const options = {
         method: 'GET',
+        // Production server
         url: 'https://fourhomeowners-apt-coordinator-server.onrender.com/directions',
+        // Local Server
+        // url: 'http://localhost:8080/directions',
+
         params: {
           locationA: locationA,
           locationB: place
@@ -43,10 +47,10 @@ const RooferCard = ({roofer, locationA, isCalculatingRadius, setIsCalculatingRad
           console.log(`Roofer is not in radius. DistanceMi: ${distanceMi}, Perimeter: ${place.miles}, Radius Results: ${radiusResults}`)
         }
       });
-
-      if (isInRadius === true) break
       setRadiusResults(radiusDistances)  
+      if (isInRadius === true) break
     }
+    setIsCalculatingRadius(false)
   }, [locationA, radiusResults, setRadiusResults, roofer.radius, setIsCalculatingRadius])
 
   return (
