@@ -1,0 +1,39 @@
+body {
+  min-width: 100%; min-height: 100vh;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: rgb(229,255,250);
+  background: linear-gradient(65deg, rgba(229,255,250,1) 0%, rgba(252,252,252,1) 66%, rgba(254,255,240,1) 100%);
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+::placeholder {
+  color: #404040;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 20vw;
+  padding: 6px;
+  background-color: transparent;
+  border: none;
+  border-bottom: solid 1.25px #c0c0c0;
+}
+
+h1 {
+  color: #086151;
+}

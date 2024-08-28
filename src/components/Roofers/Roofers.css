@@ -1,0 +1,22 @@
+  .roofer {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(24vw, 0.323fr));
+    justify-content: center;
+    align-items: center;
+    margin-left: 2vw;
+    max-width: 95vw;
+    gap: 1.5vw;
+  }
+  
+  .roofers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(24vw, 1fr));
+    margin-left: 2vw;
+    max-width: 95vw;
+    gap: 1.5vw;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }

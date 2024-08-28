@@ -1,0 +1,44 @@
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2rem;
+    padding: 0 4rem;
+    border-bottom: solid 1.5px #b0b0b0;
+  }
+  
+  .nav {
+    width: 50vw;  
+    display: flex;
+    gap: 25px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  input:focus{
+    outline: none;
+    border-bottom: solid 1.5px #b0b0b0;
+  }
+
+  .suggestion-box {
+    width: 20vw; height: 20vh;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: rgb(211, 211, 211);
+    z-index: 2;
+    filter: drop-shadow(2px 2px 2px #d1d1d1);
+  }
+  
+  .suggestion {
+    padding: 0.5rem;
+    background-color: rgb(236, 236, 236);
+    cursor: pointer;
+  }
+  
+  .suggestion h4, p {
+    margin: 0;
+  }
