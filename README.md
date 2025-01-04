@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Shinglematch
+
+An SPA that matches your location with the nearest licensed & vetted roofing company. Made for 4Homeowners & 4Roofers Co.
+
+# Quickstart
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
